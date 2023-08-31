@@ -29,12 +29,11 @@ spec:
     args: ["-c", "cyclonedx-gomod app -output /pod-data/sbom.xml /pod-data/rep"]
 
   - name: logs
-    image: ubuntu
+    image: axidex/pubuntu
     volumeMounts:
     - name: shared-data
       mountPath: /pod-data
-    command: ["/bin/sh"]
-    args: ["-c", "curl -v -X "POST" "http://localhost:8081/api/v1/bom" -H "X-API-Key: TimbOxMatBj7kSlCEq9KYJUoY70AsWmK" -H "Content-Type: multipart/form-data" -F "autoCreate=true" -F "projectName=tmp" -F "projectVersion=0.1" -F "bom=@./sbom.xml" "]
-    
+    command: ["/bin/sh"] # TODO
+    args: ["-c", "curl -v -X "POST" "http://localhost:8081/api/v1/bom" -H "X-API-Key: TimbOxMatBj7kSlCEq9KYJUoY70AsWmK" -H "Content-Type: multipart/form-data" -F "autoCreate=true" -F "projectName=tmp" -F "projectVersion=0.1" -F "bom=@pod-data/sbom.xml" "] 
 
   

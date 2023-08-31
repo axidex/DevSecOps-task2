@@ -10,4 +10,6 @@ RUN apt-get update && apt-get install -y \
 RUN pip install requests
 
 RUN mkdir /pod-data
-COPY logger.py /pod-data/logger.py
+RUN wget https://raw.githubusercontent.com/axidex/DevSecOps-task2/main/logger.py
+RUN mv logger.py /pod-data
+    
