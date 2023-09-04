@@ -6,10 +6,13 @@ RUN apt-get update && apt-get install -y \
    git \
    wget
 
+RUN apt-get install -y \
+   curl
+
 # Installing Python Libs
 RUN pip install requests
 
 RUN mkdir /pod-data
-RUN wget https://raw.githubusercontent.com/axidex/DevSecOps-task2/main/logger.py
+COPY logger.py .
 RUN mv logger.py /pod-data
     
