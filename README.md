@@ -8,9 +8,14 @@
 
 * minikube start --vm-driver=none  
 
+# Security
+
+* 
+
 # Useful commands
 ```
 kubectl cluster-info                                                            # cluster info/ip
 alias kubectl="minikube kubectl --"                                             # alias for better life
 (echo >/dev/tcp/${host}/${port}) &>/dev/null && echo "open" || echo "closed"    # ping without ping cmd
+minikube service dependency-track --url                                         # access to service of deployment
 ```
