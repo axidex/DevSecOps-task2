@@ -10,6 +10,8 @@ RUN apt-get install -y \
 
 # Installing Python Libs
 RUN pip install requests
+RUN useradd -u 1001 testuser
+USER testuser
 
 RUN mkdir /pod-data
 COPY logger.py .
