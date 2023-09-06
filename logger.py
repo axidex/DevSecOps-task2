@@ -1,6 +1,6 @@
-import requests, json, sys, os
+import requests, json, sys, os, base64
 
-project_name    = str(os.environ["NAME_DT"]) # https://github.com/0c34/govwa https://github.com/netlify/gocommerce
+project_name    = str(os.environ["NAME_DT"]).split('/')[-1] # https://github.com/0c34/govwa https://github.com/netlify/gocommerce
 project_branch  = str(os.environ["BRANCH_DT"])
 project_ip      = str(os.environ["IP_DT"])
 apiKey          = str(os.environ["API_KEY"])
@@ -25,14 +25,25 @@ def uuid_get(name, branch, url, headers):
 # to execute more cURL commands check htwagger.jtp://localhost:8081/api/sson with SwaggerUI plugin in ur browser
 headers = {"X-Api-Key": apiKey, "accept": "application/json"}
 
-uuid = uuid_get( project_name, project_branch,
-                 project_ip + '/api/v1/project', 
-                 headers=headers )
+files = {
+    'autoCreate':       (None, 'true'),
+    'projectName':      (None, project_name),
+    'projectVersion':   (None, project_branch),
+    'bom':              ('sbom.xml', open('/pod-data/sbom.xml', 'rb'), 'application/xml')
+}
 
-to_log( name =   'vuln.log', 
-        url =    project_ip + '/api/v1/metrics/project/' + str(uuid) + '/current',
-        headers = headers )
+response = requests.post( project_ip + '/api/v1/bom', 
+                          headers=headers, 
+                          files=files )
 
-to_log( name =   'vuln_description.log',
-        url =    project_ip + '/api/v1/vulnerability/project/' + str(uuid),
-        headers = headers )
+# uuid = uuid_get( project_name, project_branch,
+#                  project_ip + '/api/v1/project', 
+#                  headers=headers )
+
+# to_log( name =   'vuln.log', 
+#         url =    project_ip + '/api/v1/metrics/project/' + str(uuid) + '/current',
+#         headers = headers )
+
+# to_log( name =   'vuln_description.log',
+#         url =    project_ip + '/api/v1/vulnerability/project/' + str(uuid),
+#         headers = headers )

@@ -13,6 +13,17 @@ spec:
       initContainers:
       - name: git-container
         image: alpine/git:2.40.1
+        env:
+        - name: BRANCH_DT
+          valueFrom:
+            configMapKeyRef:
+              name: cfg
+              key: branch
+        - name: NAME_DT
+          valueFrom:
+            configMapKeyRef:
+              name: cfg
+              key: name
         volumeMounts:
         - name: shared-data
           mountPath: /pod-data
@@ -20,7 +31,7 @@ spec:
           limits:
             memory: "1Gi"
         command: ["/bin/sh"]
-        args: ["-c", "git clone https://github.com/0c34/govwa /pod-data/rep"] # https://github.com/0c34/govwa https://github.com/netlify/gocommerce
+        args: ["-c", "git clone -b $BRANCH_DT $NAME_DT /pod-data/rep"] # https://github.com/0c34/govwa https://github.com/netlify/gocommerce
 
       - name: sbom-container
         image: cyclonedx/cyclonedx-gomod
@@ -42,6 +53,11 @@ spec:
             secretKeyRef:
               name: my-api-secret
               key: api-key
+        # - name: API_KEY
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: cfg
+        #       key: api-key
         - name: IP_DT
           valueFrom:
             configMapKeyRef:
@@ -64,5 +80,5 @@ spec:
           limits:
             memory: "2Gi"
         command: ["/bin/sh"]
-        args: ["-c", "python3 logger.py $ "]
-  backoffLimit: 1 # Число попыток выполнения Job в случае неудачи
+        args: ["-c", "python3 logger.py"]
+  backoffLimit: 1

@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: cfg
 data:
-  dtip:   dependency-track:8080
-  branch: master
-  name:   https://github.com/0c34/govwa
+  dtip:     http://dependency-track:8080
+  branch:   master
+  name:     https://github.com/0c34/govwa
