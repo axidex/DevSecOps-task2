@@ -11,7 +11,7 @@
 # Security
 
 * create user
-* 
+* login
 
 # Useful commands
 ```
@@ -20,3 +20,8 @@ alias kubectl="minikube kubectl --"                                             
 (echo >/dev/tcp/${host}/${port}) &>/dev/null && echo "open" || echo "closed"    # ping without ping cmd
 minikube service dependency-track --url                                         # access to service of deployment
 ```
+
+# Sources
+* https://kubernetes.io/docs/concepts/
+* HPA гайд от Алены
+* https://www.youtube.com/playlist?list=PL8D2P0ruohOA4Y9LQoTttfSgsRwUGWpu6
